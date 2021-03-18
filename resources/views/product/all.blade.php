@@ -11,12 +11,13 @@
 </head>
 <body>
     <div class="container" style="margin-top: 40px;">
-        <table class = "table table_bordered" id = "xyz">
+        <table class = "table table-sm" id = "xyz">
             <thead>
                 <th>Product</th>
                 <th>Price</th>
                 <th>Category</th>
                 <th>Edit</th>
+                <th>Delete</th> 
             </thead>
             <tbody>
                 @if($products)
@@ -25,7 +26,8 @@
                             <td>{{ $p->product }}</td>
                             <td>{{ $p->price }}</td>
                             <td>{{ $p->category }}</td>
-                            <td><button>Edit</button></td>
+                            <td><button class="btn btn-primary">Edit</button></td>
+                            <td><button class="btn btn-danger">Delete</button></td>
                         </tr>
                     @endforeach
                 @endif
@@ -43,9 +45,10 @@
         $(document).ready(function(){
             $("#xyz").DataTable({
                 "columnDefs": [{
-                "targets": 3,
+                "targets": [3,4],
                 "orderable": false
                 }],
+                
                 dom: 'Bfrtip',
                 buttons: [
                     'copyHtml5',
