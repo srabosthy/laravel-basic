@@ -19,5 +19,6 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 Route::get('product',[ProductController::class,'products']);
-Route::post('insert-product',[ProductController::class,'insert']);
+Route::get('categories',[ProductController::class,'categories']);
+Route::post('insert-product',[ProductController::class,'createproduct']);
 Route::get('product/{id}',[ProductController::class,'getProductById']);
