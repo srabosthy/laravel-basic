@@ -15,18 +15,8 @@ class ProductController extends Controller
                        ->select('p.id','p.name as product','p.price','c.name as category')
                        ->orderBy('p.id','asc')
                        ->get();
-        if($products){
-            $error = false;
-            $msg = 'Data Retrieved';
-        }
-        else{
-            $error = true;
-            $msg = 'No data Found';
-        }
         return response()->json([
-            'data' => $products,
-            'error' => $error,
-            'message' => $msg
+            'products' => $products,
         ]);
     }
     public function insert(Request $req){
@@ -53,6 +43,28 @@ class ProductController extends Controller
           'error' => false,
           'msg' => 'data Retrieved'
         ]);
+    }
+    public function categories(){
+        $categories = DB::table('categories as c')
+            ->select('c.id','c.name')
+            ->get();
+        return response()->json([
+            'categories' => $categories
+        ]);
+    }
+    public function createproduct(Request $request){
+        $obj = new product();
+        $obj->name = $request->pname;
+        $obj->price = $request->pprice;
+        $obj->status = $request->status;
+        $obj->category_id = $request->pcategory;
+        if($obj->save()){
+            return response()->json([
+                'product' => $obj,
+                'msg' => 'Successfully inserted'
+            ]);
+        }
+        
     }
 
 }

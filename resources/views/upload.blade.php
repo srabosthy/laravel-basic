@@ -13,8 +13,10 @@
         <form method="post" action="{{ URL::to('upload-image') }}"  enctype="multipart/form-data">
         {{ csrf_field() }}
             <div class="form-group">
-                <input type="file"  class="form-control" name="filename" id="img">   
-                <img id="blah" src="#" alt="your image" />
+                <input type="file"  class="form-control" name="filename[]" multiple id="img">   
+                <div class="gallery">
+                    <!-- <img id="blah" class="img-fluid" style="width: 180px; height: 180px;"> -->
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Upload">
@@ -37,21 +39,20 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script>
-            function readURL(input) {
-                if (input.files && input.files[0]) {
+        function readURL(input, x) {
+            for(var i=0;i<input.files.length;i++){
+                if (input.files[i]) {
                     var reader = new FileReader();
-                    
                     reader.onload = function(e) {
-                        $('#blah').attr('src', e.target.result);
+                        $($.parseHTML('<img class="img-fluid" style="width: 200px;">')).attr('src', e.target.result).appendTo(x);
                     }
-                    
-                    reader.readAsDataURL(input.files[0]); // convert to base64 string
+                    reader.readAsDataURL(input.files[i]); // convert to base64 string
                 }
             }
-
-            $("#img").change(function() {
-                readURL(this);
-                });
+        }
+        $("#img").change(function() {
+            readURL(this, 'div.gallery');
+        });
     </script>
 </body>
 </html>

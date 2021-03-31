@@ -45,16 +45,35 @@
         $(document).ready(function(){
             $("#xyz").DataTable({
                 "columnDefs": [{
-                "targets": [3,4],
-                "orderable": false
+                    "targets": [3,4],
+                    "orderable": false
                 }],
-                
-                dom: 'Bfrtip',
+                dom: 'lBfrtip',
                 buttons: [
-                    'copyHtml5',
-                    'excelHtml5',
-                    'csvHtml5',
-                    'pdfHtml5'
+                    {
+                        extend: 'copyHtml5',
+                        exportOptions: {
+                            columns: [0,1,2]
+                        }
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        exportOptions: {
+                            columns: [0,1,2]
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: [0,1,2]
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            columns: [0,1,2]
+                        }
+                    }
                 ]
             });
         });

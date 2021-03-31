@@ -49,6 +49,7 @@ Route::get('chart',[LayoutController::class,'chart']);
 Route::get('table',[LayoutController::class,'table']);
 
 //authentication-authorization
+Route::get('/',[AuthController::class,'login']);
 Route::get('login',[AuthController::class,'login']);
 Route::post('store-login',[AuthController::class,'storelogin']);
 Route::middleware(['AdminIsLogin'])->group(function () {
