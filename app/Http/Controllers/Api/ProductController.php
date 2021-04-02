@@ -34,22 +34,26 @@ class ProductController extends Controller
             ]);
         }
     }
-    public function getProductById($id){
-        $product = DB::table('products')
-                      ->where('id','=',$id)
-                      ->first();
-        return response()->json([
-          'data' => $product,
-          'error' => false,
-          'msg' => 'data Retrieved'
-        ]);
-    }
     public function categories(){
         $categories = DB::table('categories as c')
             ->select('c.id','c.name')
             ->get();
         return response()->json([
             'categories' => $categories
+        ]);
+    }
+
+
+    //actual work
+    public function getProductById($id){
+        $product = DB::table('products as p')
+                       ->join('categories as c','p.category_id','c.id')
+                       ->select('p.id','p.name as product','p.details','p.price','p.status','c.name as category','c.id as cat_id')
+                       ->where('p.id','=',$id)
+                       ->first();
+        return response()->json([
+          'product' => $product,
+          'msg' => 'data Retrieved'
         ]);
     }
     public function createproduct(Request $request){
@@ -63,8 +67,20 @@ class ProductController extends Controller
                 'product' => $obj,
                 'msg' => 'Successfully inserted'
             ]);
-        }
-        
+        }   
     }
-
+    public function updateProduct(Request $request,$id){
+        $obj = product::find($id);
+        $obj->name = $request->name;
+        $obj->details = $request->details;
+        $obj->price = $request->price;
+        $obj->status = $request->status;
+        $obj->category_id = $request->category_id;
+        if($obj->save()){
+            return response()->json([
+                'product' => $obj,
+                'msg' => 'Successfully Updated'
+            ]);
+        }
+    }
 }
