@@ -18,7 +18,11 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+//practise
 Route::get('product',[ProductController::class,'products']);
 Route::get('categories',[ProductController::class,'categories']);
+
+//actual work
 Route::post('insert-product',[ProductController::class,'createproduct']);
-Route::get('product/{id}',[ProductController::class,'getProductById']);
+Route::get('get-product/{id}',[ProductController::class,'getProductById']);
+Route::post('push-product/{id}',[ProductController::class,'updateProduct']);
